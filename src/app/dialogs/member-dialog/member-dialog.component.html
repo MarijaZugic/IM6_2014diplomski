@@ -1,0 +1,42 @@
+<div class="container">
+    <h3 mat-dialog-title *ngIf="flag == 1">Add member</h3>
+    <h3 mat-dialog-title *ngIf="flag == 2">Modify member {{data.fullName}}</h3>
+    <h3 mat-dialog-title *ngIf="flag == 3">Delete member {{data.fullName}}</h3>
+  
+    <form class="mat-dialog-content" #formControl="ngForm">
+  
+      <div class="form">
+        <mat-form-field>
+          <mat-select [(ngModel)]="data.localgroup" placeholder="Localgroup" name="localgroup" [compareWith]="compareTo" [disabled]="flag == 3">
+            <mat-option *ngFor="let localgroup of localgroups" [value]="localgroup">
+              {{ localgroup.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+  
+      <div class="form">
+        <mat-form-field>
+          <input matInput placeholder="First and last name" [(ngModel)]="data.fullName" name="fullName" [disabled]="flag == 3">
+        </mat-form-field>
+      </div>
+
+
+          <div class="form">
+              <mat-form-field>
+                  <input matInput [matDatepicker]="birthday" placeholder="Choose birthday" [(ngModel)]="data.birthday" name="birthday" [disabled]="flag == 3">
+                  <mat-datepicker-toggle matSuffix [for]="birthday"></mat-datepicker-toggle>
+                  <mat-datepicker #birthday></mat-datepicker>
+                </mat-form-field>
+          </div>
+  
+  
+      <div mat-dialog-actions>
+        <button mat-button *ngIf="flag == 1" [type]="submit" [disabled]="!formControl.valid" [mat-dialog-close]="1" (click)="add()">Save</button>
+        <button mat-button *ngIf="flag == 2" [type]="submit" [disabled]="!formControl.valid" [mat-dialog-close]="1" (click)="update()">Save</button>
+        <button mat-button *ngIf="flag == 3" [type]="submit" [mat-dialog-close]="1" (click)="delete()">Delete</button>
+        <button mat-button (click)="cancel()" tabindex="-1">Cancel</button>
+      </div>
+    </form>
+   </div>
+  

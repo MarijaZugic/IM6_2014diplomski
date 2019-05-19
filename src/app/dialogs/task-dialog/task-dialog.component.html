@@ -1,0 +1,58 @@
+<div class="container">
+    <h3 mat-dialog-title *ngIf="flag == 1">Add task</h3>
+    <h3 mat-dialog-title *ngIf="flag == 2">Modify task: {{data.description}}</h3>
+    <h3 mat-dialog-title *ngIf="flag == 3">Delete task: {{data.description}}</h3>
+  
+    <form class="mat-dialog-content" #formControl="ngForm">
+  
+      <div class="form">
+        <mat-form-field>
+          <mat-select [(ngModel)]="data.event" placeholder="event" name="event" [compareWith]="compareTo" [disabled]="flag == 3">
+            <mat-option *ngFor="let event of events" [value]="event">
+              {{ event.eventName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="form">
+          <mat-form-field>
+            <mat-select [(ngModel)]="data.field" placeholder="Task Fields" name="field" [compareWith]="compareTo" [disabled]="flag == 3">
+              <mat-option *ngFor="let field of fields" [value]="field">
+                {{ field.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="form">
+            <mat-form-field>
+              <mat-select [(ngModel)]="data.member" placeholder="Member" name="member" [compareWith]="compareTo" [disabled]="flag == 3">
+                <mat-option *ngFor="let member of members" [value]="member">
+                  {{ member.fullName }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+  
+          <div class="form">
+              <mat-checkbox align="finished" [(ngModel)]="data.finished" name="finished" [disabled]="flag == 3">Finished</mat-checkbox>
+            </div>
+  
+      
+            <div class="form">
+                <mat-form-field>
+                  <input matInput placeholder="description" [(ngModel)]="data.description" name="description" [disabled]="flag == 3">
+                </mat-form-field>
+              </div>
+            
+  
+      <div mat-dialog-actions>
+        <button mat-button *ngIf="flag == 1" [type]="submit" [disabled]="!formControl.valid" [mat-dialog-close]="1" (click)="add()">Save</button>
+        <button mat-button *ngIf="flag == 2" [type]="submit" [disabled]="!formControl.valid" [mat-dialog-close]="1" (click)="update()">Save</button>
+        <button mat-button *ngIf="flag == 3" [type]="submit" [mat-dialog-close]="1" (click)="delete()">Delete</button>
+        <button mat-button (click)="cancel()" tabindex="-1">Cancel</button>
+      </div>
+    </form>
+   </div>
+  

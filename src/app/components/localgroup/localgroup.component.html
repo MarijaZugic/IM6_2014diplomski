@@ -1,0 +1,70 @@
+<mat-toolbar color="primary">
+    <span class="title-center">Local Groups</span>
+  </mat-toolbar>
+
+  <div class="container mat-elevation-z8">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+    </mat-form-field>
+    <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{row.id}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>LG Name</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.name}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="country">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Country</mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.country.country}}</mat-cell>
+          </ng-container>  
+
+      <ng-container matColumnDef="city">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>LG City</mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.city}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="university">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Registered University</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.university}}</mat-cell>
+        </ng-container>
+
+      <ng-container matColumnDef="email">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Board email</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.email}}</mat-cell>
+        </ng-container>
+
+      <!-- actions -->
+      <!--
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>
+          <button mat-icon-button color="primary" (click)="openDialog(1)">
+            <mat-icon>add</mat-icon>
+          </button>
+        </mat-header-cell>
+
+        <mat-cell *matCellDef="let row; let i=index;">
+          <button mat-icon-button color="primary" (click)="openDialog(2, row.id, row.datum, row.isporuceno, row.placeno, row.iznos, row.dobavljac)">
+            <mat-icon aria-label="Edit">edit</mat-icon>
+          </button>
+
+          <button mat-icon-button color="primary" (click)="openDialog(3, row.id, row.datum, row.isporuceno, row.placeno, row.iznos, row.dobavljac)">
+            <mat-icon aria-label="Delete">delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container> -->
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row style="cursor: pointer" *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)" [ngClass]="{'selectRow': selectedLocalgroup != null && selectedLocalgroup.id == row.id}"></mat-row>
+    </mat-table>
+    <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true">
+    </mat-paginator>
+  </div> 
+  
+    <div class="container mat-elevation-z8">
+        <app-member *ngIf="selectedLocalgroup" [selectedLocalgroup]=selectedLocalgroup></app-member>
+      </div>
+    
